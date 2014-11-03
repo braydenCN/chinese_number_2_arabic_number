@@ -64,4 +64,16 @@ public class ChineseNum2ArabicNumConverterTest {
 		ChineseNum2ArabicNumConverter converter = new ChineseNum2ArabicNumConverter();
 		assertEquals(100L, converter.convert("一百"));
 	}
+	
+	@Test
+	public void test11(){
+		ChineseNum2ArabicNumConverter converter = new ChineseNum2ArabicNumConverter();
+		assertEquals(0L, converter.convert("零"));
+	}
+	
+	@Test
+	public void test12(){
+		ChineseNum2ArabicNumConverter converter = new ChineseNum2ArabicNumConverter();
+		assertEquals(9999_9999_9999_9999L, converter.convert("九千九百九十九万九千九百九十九亿九千九百九十九万九千九百九十九"));
+	}
 }

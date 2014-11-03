@@ -2,6 +2,13 @@ package com.brayden.chi2ara;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Convert Chinese number to Arabic number.
+ * Only for Simplified Chinese.
+ * Only for numbers in [0 - 9999_9999_9999_9999]
+ * @author Brayden Zhang
+ *
+ */
 public class ChineseNum2ArabicNumConverter {
 	
 	private static Map<Character, Integer> chieseDigit2AragicDigitMap = new HashMap<>();
