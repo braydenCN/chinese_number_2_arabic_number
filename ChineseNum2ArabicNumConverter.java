@@ -11,51 +11,51 @@ import java.util.Map;
  */
 public class ChineseNum2ArabicNumConverter {
 	
-	private static Map<Character, Integer> chieseDigit2AragicDigitMap = new HashMap<>();
+	private static Map<Character, Integer> chineseDigit2AragicDigitMap = new HashMap<>();
 
 	static{
-		chieseDigit2AragicDigitMap.put('Ò»', /* => */ 1);
-		chieseDigit2AragicDigitMap.put('¶ş', /* => */ 2);
-		chieseDigit2AragicDigitMap.put('Èı', /* => */ 3);
-		chieseDigit2AragicDigitMap.put('ËÄ', /* => */ 4);
-		chieseDigit2AragicDigitMap.put('Îå', /* => */ 5);
-		chieseDigit2AragicDigitMap.put('Áù', /* => */ 6);
-		chieseDigit2AragicDigitMap.put('Æß', /* => */ 7);
-		chieseDigit2AragicDigitMap.put('°Ë', /* => */ 8);
-		chieseDigit2AragicDigitMap.put('¾Å', /* => */ 9);
+		chineseDigit2AragicDigitMap.put('ä¸€', /* => */ 1);
+		chineseDigit2AragicDigitMap.put('äºŒ', /* => */ 2);
+		chineseDigit2AragicDigitMap.put('ä¸‰', /* => */ 3);
+		chineseDigit2AragicDigitMap.put('å››', /* => */ 4);
+		chineseDigit2AragicDigitMap.put('äº”', /* => */ 5);
+		chineseDigit2AragicDigitMap.put('å…­', /* => */ 6);
+		chineseDigit2AragicDigitMap.put('ä¸ƒ', /* => */ 7);
+		chineseDigit2AragicDigitMap.put('å…«', /* => */ 8);
+		chineseDigit2AragicDigitMap.put('ä¹', /* => */ 9);
 	}
 
 	/** A normalized Chinese number should be in format of:
-	 * Ò»Ç§Ò»°ÙÒ»Ê®Ò»ÍòÒ»Ç§Ò»°ÙÒ»Ê®Ò»ÒÚÒ»Ç§Ò»°ÙÒ»Ê®Ò»ÍòÒ»Ç§Ò»°ÙÒ»Ê®Ò»¸ö
+	 * ä¸€åƒä¸€ç™¾ä¸€åä¸€ä¸‡ä¸€åƒä¸€ç™¾ä¸€åä¸€äº¿ä¸€åƒä¸€ç™¾ä¸€åä¸€ä¸‡ä¸€åƒä¸€ç™¾ä¸€åä¸€ä¸ª
 	 * 
-	 * rule1. no "Ê®°Ë", should be "Ò»Ê®°Ë"; no "Ê®Íò", "Ê®ÒÚ".
-	 * rule2¡£  ended with "ÒÚ, Íò, Ç§, °Ù, Ê®, ¸ö", eg, no "Ò»Ç§Ò»".
-	 * rule3. no "Áã";
+	 * rule1. no "åå…«", should be "ä¸€åå…«"; no "åä¸‡", "åäº¿".
+	 * rule2ã€‚  ended with "äº¿, ä¸‡, åƒ, ç™¾, å, ä¸ª", eg, no "ä¸€åƒä¸€".
+	 * rule3. no "é›¶";
 	 * @param chineseNum original Chinese number
 	 * @return A normalized Chinese number
 	 */
 	private String normalizeChineseNum(String chineseNum) {
-		if(chineseNum.startsWith("Ê®")){ // rule1
-			chineseNum = "Ò»" + chineseNum;
+		if(chineseNum.startsWith("å")){ // rule1
+			chineseNum = "ä¸€" + chineseNum;
 		}
-		if(chineseNum.matches(".*[Ò»¶şÈıËÄÎåÁùÆß°Ë¾Å]$")){ // rule2
-			if(chineseNum.length() == 1){ // for case of "Ò»"
-				chineseNum += '¸ö';
+		if(chineseNum.matches(".*[ä¸€äºŒä¸‰å››äº”å…­ä¸ƒå…«ä¹]$")){ // rule2
+			if(chineseNum.length() == 1){ // for case of "ä¸€"
+				chineseNum += 'ä¸ª';
 			}else {
 				char needTocheck = chineseNum.charAt(chineseNum.length() - 2);
-				if(needTocheck == 'Áã') // for case of "Ò»°ÙÁãÒ»"
-					chineseNum += '¸ö';
+				if(needTocheck == 'é›¶') // for case of "ä¸€ç™¾é›¶ä¸€"
+					chineseNum += 'ä¸ª';
 				else{
 					switch(needTocheck){
-					case 'Íò': chineseNum += 'Ç§'; break;
-					case 'Ç§': chineseNum += '°Ù'; break;
-					case '°Ù': chineseNum += 'Ê®'; break;
-					case 'Ê®': chineseNum += '¸ö'; break;
+					case 'ä¸‡': chineseNum += 'åƒ'; break;
+					case 'åƒ': chineseNum += 'ç™¾'; break;
+					case 'ç™¾': chineseNum += 'å'; break;
+					case 'å': chineseNum += 'ä¸ª'; break;
 					}
 				}
 			}
 		}
-		chineseNum = chineseNum.replaceAll("Áã", ""); // rule3
+		chineseNum = chineseNum.replaceAll("é›¶", ""); // rule3
 		return chineseNum;
 	}
 	
@@ -66,32 +66,32 @@ public class ChineseNum2ArabicNumConverter {
 		int curDigit = 0;
 		for(char c : chineseNum.toCharArray()){
 			switch(c){
-			case 'ÒÚ': 
+			case 'äº¿': 
 				resultWithYi = (result + curDigit) * 1_0000_0000;
 			    result = 0;
 				curDigit = 0;
 				break;
-			case 'Íò': 
+			case 'ä¸‡': 
 				result = (result + curDigit) * 1_0000;
 			    curDigit = 0;
 			    break;
-			case 'Ç§': 
+			case 'åƒ': 
 				result += curDigit * 1000; 
 				curDigit = 0;
 				break;
-			case '°Ù': 
+			case 'ç™¾': 
 				result += curDigit * 100;  
 				curDigit = 0;
 				break;
-			case 'Ê®': 
+			case 'å': 
 				result += curDigit * 10;   
 				curDigit = 0;
 				break;
-			case '¸ö': 
+			case 'ä¸ª': 
 				result += curDigit;        
 				break;
 			default: 
-				curDigit = chieseDigit2AragicDigitMap.get(c);
+				curDigit = chineseDigit2AragicDigitMap.get(c);
 			}
 		}
 		return result + resultWithYi;
